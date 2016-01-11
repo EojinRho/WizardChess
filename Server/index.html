@@ -23,6 +23,9 @@
         socket.on('connection',function(data){
             console.log(data.msg);
             $('#msgs').append(data.msg+'<BR>');
+        });socket.on('toclient',function(data){
+            console.log(data.msg);
+            $('#msgs').append(data.msg+'<BR>');
         });
 </script>
 </body>

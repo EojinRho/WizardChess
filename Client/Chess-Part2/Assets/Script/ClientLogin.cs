@@ -3,45 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using SocketIO;
 
-public class Client : MonoBehaviour {
+public class ClientLogin : MonoBehaviour {
 	private SocketIOComponent socket;
 	private PlayerControl _PlayerControl;
-	private Dictionary<string, string> data;
-	GameObject go;
-	GameObject playercontrolobject;
+	Dictionary<string, string> data;
 	private string User = " ";
 	public int selectColor = 0;
-	private string[] OptionColor = new string[]{"white","black"};
+	private string[] OptionColor = new string[]{"white","blue"};
 	string LoginFail = " ";
 	private bool login = true;
 
-	void Awake(){
-		DontDestroyOnLoad (transform.gameObject);
-	}
-
 	void Start () {
-		DontDestroyOnLoad (transform.gameObject);
-		go = GameObject.Find("SocketIO");
+		DontDestroyOnLoad (gameObject);
+		GameObject go = GameObject.Find("SocketIO");
 		socket = go.GetComponent<SocketIOComponent>();
-
-
-		Debug.Log (socket);
-		if (socket == null) {
-			Debug.Log("fuck you!");
-		}
 
 		socket.On ("connection", Connection);
 		socket.On("loginconfirm", LoginConfirm);
-		socket.On("toclient", ToClient);
-	}
-		
-
-	public void ToClient(SocketIOEvent e){
-		Debug.Log(string.Format("[name: {0}, data: {1}]", e.name, e.data));
-		Debug.Log (e.data ["msg"].ToString().Trim());
-		playercontrolobject = GameObject.Find ("__GameManager");
-		_PlayerControl = playercontrolobject.GetComponent<PlayerControl> ();
-		//_PlayerControl.TakeInput (e.data ["msg"].ToString().Trim('"'));
 	}
 
 	public void Update(){
